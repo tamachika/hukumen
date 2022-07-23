@@ -1,0 +1,81 @@
+/* okane^(2~9) = jubun */
+
+#include<stdio.h>
+
+int keta(int n1, int n2,int n3, int n4, int n5);
+int chigau(int *p, int *q);
+void hyouji(int *okane, int num, int *jubun);
+
+int main(void) {
+    int o,k,a,n,e,j,u,b;
+    int okane[5],jubun[5],kazu=1, num;
+    scanf("%d", &num);
+    
+    printf(" okane * num = jubun\n");
+
+
+    for (int o = 1; o < 10; o++){
+        for (int k = 0; k < 10; k++){
+            for (int a = 0; a < 10; a++){
+                for (int n = 0; n < 10; n++){
+                    for (int e = 0; e < 10; e++){
+                        for (int j = 1; j < 10; j++){
+                            for (int u = 0; u < 10; u++){
+                                for (int b = 0; b < 10; b++){
+                                    if ( keta(o,k,a,n,e) * num == keta(j,u,b,u,n) ) {
+                                        okane[0]=o;
+                                        okane[1]=k;
+                                        okane[2]=a;
+                                        okane[3]=n;
+                                        okane[4]=e;
+
+                                        jubun[0]=j;
+                                        jubun[1]=u;
+                                        jubun[2]=b;
+                                        jubun[3]=u;
+                                        jubun[4]=n;
+
+                                        if (chigau(okane, jubun)) {
+                                            printf("%d --->", kazu++);
+                                            hyouji(okane, num, jubun);
+                                        }
+                                    }
+    }}}}}}}}
+
+    
+    
+
+    printf("--- Owari --- \n");
+    return 0;
+}
+
+/*結果表示のプログラム*/
+void hyouji(int *okane, int num, int *jubun){
+    printf("%d%d%d%d%d * %d = %d%d%d%d%d\n", okane[0],okane[1],okane[2],okane[3],okane[4],num,jubun[0],jubun[1],jubun[2],jubun[3],jubun[4]);
+}
+
+int keta(int n1, int n2, int n3, int n4, int n5){
+    return n1*10000 + n2*1000 + n3*100 + n4*10 + n5;
+}
+
+/*文字を分けている。カブったらkekka=0を返す関数____okane^(2~9) = jubun */
+int chigau(int *p, int *q){
+    int kekka = 1;
+    if( *p == *(p+1) || *p == *(p+2) || *p == *(p+3) || *p == *(p+4) ) kekka = 0;
+    if( *(p+1) == *(p+2) || *(p+1) == *(p+3) || *(p+1) == *(p+4) ) kekka = 0;
+    if( *(p+2) == *(p+3) || *(p+2) == *(p+4) ) kekka = 0;
+    if( *(p+3) == *(p+4) ) kekka = 0;
+
+    if( *q == *(q+1) || *q == *(q+2) || *q == *(q+3) || *q == *(q+4) ) kekka = 0;
+    if( *(q+1) == *(q+2) || *(q+1) == *(q+4) ) kekka = 0;
+    if( *(q+2) == *(q+3) || *(q+2) == *(q+4) ) kekka = 0;
+    if( *(q+3) == *(q+4) ) kekka = 0;
+
+    if ( *p == *q || *p == *(q+1) || *p == *(q+2) || *p == *(q+3) || *p == *(q+4) ) kekka = 0;
+    if ( *(p+1) == *q || *(p+1) == *(q+1) || *(p+1) == *(q+2) || *(p+1) == *(q+3) || *(p+1) == *(q+4) ) kekka = 0;
+    if ( *(p+2) == *q || *(p+2) == *(q+1) || *(p+2) == *(q+2) || *(p+2) == *(q+3) || *(p+2) == *(q+4) ) kekka = 0;
+    if ( *(p+3) == *q || *(p+3) == *(q+1) || *(p+3) == *(q+2) || *(p+3) == *(q+3) ) kekka = 0;
+    if ( *(p+4) == *q || *(p+4) == *(q+1) || *(p+4) == *(q+2) || *(p+4) == *(q+3) || *(p+4) == *(q+4) ) kekka = 0;
+    
+    return kekka;
+}
